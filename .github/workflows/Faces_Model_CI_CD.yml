@@ -28,7 +28,7 @@ jobs:
         tar -xzvf Caras_fotos.tgz
 
     - name: Execute model training
-      run: python faces_model.py
+      run: python entrenamiento.py
 
     - name: Show root directory
       run: ls -la
