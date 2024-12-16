@@ -24,7 +24,7 @@ jobs:
 
     - name: Download dataset from Google Drive
       run: |
-        gdown --id 1IfVB4zOMIhyZxSehsCRkr6c26zgGhgJp
+        gdown 1IfVB4zOMIhyZxSehsCRkr6c26zgGhgJp
 
     - name: Execute model training
       run: python entrenamiento.py
