@@ -13,19 +13,28 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+
     - name: hello-world
       run: echo "hello world workflows …"
-    - name: show python version
+
+    - name: Show Python version
       run: python --version
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Download dataset from Google Drive
+    - name: Download dataset TAR from Google Drive
       run: |
-        gdown 1IfVB4zOMIhyZxSehsCRkr6c26zgGhgJp
-        tar -xzvf Caras_fotos.zip
+        gdown https://drive.google.com/file/d/1HNNUtQVTgT-zaL7lnBlRhtqZDS5ubXHg -O Caras_fotos.tar.gz
+        ls -la
+
+    - name: Extract dataset
+      run: |
+        mkdir -p dataset
+        tar -xzvf dataset.tar.gz -C dataset
+        ls -la dataset
 
     - name: Execute model training
       run: python entrenamiento.py
@@ -43,15 +52,14 @@ jobs:
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
 
     - name: Download and run the Docker base image
       run: docker run -d --name serving_base tensorflow/serving
 
-    - name: copy model to the Docker image
-      run: docker cp ${{secrets.MODEL_NAME}} serving_base:/models/${{secrets.MODEL_NAME}}
+    - name: Copy model to the Docker image
+      run: docker cp ${{ secrets.MODEL_NAME }} serving_base:/models/${{ secrets.MODEL_NAME }}
 
     - name: Build the custom Docker image
       run: docker commit --change "ENV MODEL_NAME ${{ secrets.MODEL_NAME }}" serving_base ${{ secrets.DOCKER_USER }}/tensorflow-${{ secrets.MODEL_NAME }}:${{ github.sha }}
