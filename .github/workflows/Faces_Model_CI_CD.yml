@@ -40,7 +40,7 @@ jobs:
         if file Caras_fotos.tgz.tar | grep -q 'gzip compressed data'; then
           tar -xzvf Caras_fotos.tgz.tar -C dataset
         else
-          tar -xvf dataset.tgz.tar -C dataset
+          tar -xvf Caras_fotos.tgz.tar -C dataset
         fi
         ls -la dataset   
 
