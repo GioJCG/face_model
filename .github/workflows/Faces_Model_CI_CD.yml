@@ -27,7 +27,7 @@ jobs:
 
     - name: Download dataset TAR from Google Drive
       run: |
-        gdown https://drive.google.com/file/d/1HNNUtQVTgT-zaL7lnBlRhtqZDS5ubXHg -O Caras_fotos.tar.gz
+        gdown https://drive.google.com/file/d/1HNNUtQVTgT-zaL7lnBlRhtqZDS5ubXHg/view?usp=drive_link -O Caras_fotos.tar.gz
         ls -la
 
     - name: Extract dataset
