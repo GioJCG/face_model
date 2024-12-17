@@ -33,7 +33,7 @@ jobs:
     - name: Extract dataset
       run: |
         mkdir -p dataset
-        tar -xvf Caras_fotos.tar.gz -C dataset
+        unzip Caras_fotos.zip -d dataset
         ls -la dataset
 
     - name: Execute model training
