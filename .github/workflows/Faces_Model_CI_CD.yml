@@ -30,11 +30,19 @@ jobs:
         gdown 1HNNUtQVTgT-zaL7lnBlRhtqZDS5ubXHg -O Caras_fotos.tar.gz
         ls -la
 
+    - name: Verify file format
+      run: |
+        file dataset.tgz.tar
+
     - name: Extract dataset
       run: |
         mkdir -p dataset
-        unzip Caras_fotos.zip -d dataset
-        ls -la dataset
+        if file Caras_fotos.tgz.tar | grep -q 'gzip compressed data'; then
+          tar -xzvf Caras_fotos.tgz.tar -C dataset
+        else
+          tar -xvf dataset.tgz.tar -C dataset
+        fi
+        ls -la dataset   
 
     - name: Execute model training
       run: python entrenamiento.py
